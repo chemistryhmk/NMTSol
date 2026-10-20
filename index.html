@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>НМТ Хімія: Інтерактивний Тренажер з Розчинів</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            cyan: '#06b6d4',
+                            emerald: '#10b981',
+                            amber: '#f59e0b',
+                            rose: '#f43f5e',
+                            purple: '#a855f7',
+                            dark: '#0f172a',
+                            card: '#1e293b',
+                            border: '#334155'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between custom-scrollbar bg-slate-900 text-slate-100 selection:bg-cyan-500 selection:text-slate-900">
+
+    <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-50 px-4 py-4 md:px-8">
+        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-emerald-400 flex items-center justify-center font-black text-slate-950 text-xl shadow-lg shadow-cyan-500/20">
+                    🧪
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-black tracking-tight text-white">НМТ Хімія: Розчини</h1>
+                    <p class="text-xs md:text-sm text-cyan-400 font-medium">Інтерактивний тренажер-інтенсив</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-2 bg-slate-800/80 p-1.5 rounded-xl border border-slate-700/60">
+                <button onclick="switchTab('matching')" id="tab-matching" class="tab-btn px-3 py-2 rounded-lg text-sm font-bold transition-all bg-cyan-500 text-slate-950 shadow-md">
+                    1. Системи
+                </button>
+                <button onclick="switchTab('sequence')" id="tab-sequence" class="tab-btn px-3 py-2 rounded-lg text-sm font-bold transition-all text-slate-300 hover:text-white hover:bg-slate-700/50">
+                    2. Алгоритм
+                </button>
+                <button onclick="switchTab('blitz')" id="tab-blitz" class="tab-btn px-3 py-2 rounded-lg text-sm font-bold transition-all text-slate-300 hover:text-white hover:bg-slate-700/50">
+                    3. Пастки НМТ
+                </button>
+                <button onclick="switchTab('calc')" id="tab-calc" class="tab-btn px-3 py-2 rounded-lg text-sm font-bold transition-all text-slate-300 hover:text-white hover:bg-slate-700/50">
+                    4. Задачі
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto w-full p-4 md:p-8 flex-grow">
+
+        <!-- TAB 1: MATCHING EXERCISE -->
+        <section id="section-matching" class="tab-content space-y-6">
+            <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-6 shadow-xl">
+                <div class="flex items-start justify-between gap-4 mb-4">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-cyan-500/10 text-cyan-400 text-xs font-black tracking-wider uppercase rounded-full mb-2 border border-cyan-500/20">
+                            Вправа 1
+                        </span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-white">Класифікація Дисперсних Систем</h2>
+                        <p class="text-slate-300 text-base md:text-lg mt-1">
+                            Знайдіть відповідність між типом системи, розміром частинок та прикладом/властивістю.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
+                    <!-- Cards to match -->
+                    <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-5 space-y-3">
+                        <div class="text-cyan-400 font-bold text-lg border-b border-slate-800 pb-2">Істинний розчин</div>
+                        <div class="space-y-2">
+                            <label class="text-xs text-slate-400 font-bold uppercase tracking-wider">Розмір частинок:</label>
+                            <select id="match-size-1" class="w-full bg-slate-800 border border-slate-600 rounded-lg p-3 text-white font-medium focus:border-cyan-400 focus:outline-none">
+                                <option value="">Оберіть розмір...</option>
+                                <option value="small">< 1 нм</option>
+                                <option value="medium">1 - 100 нм</option>
+                                <option value="large">> 100 нм</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs text-slate-400 font-bold uppercase tracking-wider">Ознака / Приклад:</label>
+                            <select id="match-ex-1" class="w-full bg-slate-800 border border-slate-600 rounded-lg p-3 text-white font-medium focus:border-cyan-400 focus:outline-none">
+                                <option value="">Оберіть приклад...</option>
+                                <option value="tyndall">Ефект Тіндаля, туман, білок</option>
+                                <option value="transparent">Прозорий, не видно частинок</option>
+                                <option value="sediment">Каламутний, осідає з часом</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-5 space-y-3">
+                        <div class="text-purple-400 font-bold text-lg border-b border-slate-800 pb-2">Колоїдний розчин</div>
+                        <div class="space-y-2">
+                            <label class="text-xs text-slate-400 font-bold uppercase tracking-wider">Розмір частинок:</label>
+                            <select id="match-size-2" class="w-full bg-slate-800 border border-slate-600 rounded-lg p-3 text-white font-medium focus:border-cyan-400 focus:outline-none">
+                                <option value="">Оберіть розмір...</option>
+                                <option value="small">< 1 нм</option>
+                                <option value="medium">1 - 100 нм</option>
+                                <option value="large">> 100 нм</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs text-slate-400 font-bold uppercase tracking-wider">Ознака / Приклад:</label>
+                            <select id="match-ex-2" class="w-full bg-slate-800 border border-slate-600 rounded-lg p-3 text-white font-medium focus:border-cyan-400 focus:outline-none">
+                                <option value="">Оберіть приклад...</option>
+                                <option value="tyndall">Ефект Тіндаля, туман, білок</option>
+                                <option value="transparent">Прозорий, не видно частинок</option>
+                                <option value="sediment">Каламутний, осідає з часом</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-5 space-y-3">
+                        <div class="text-amber-400 font-bold text-lg border-b border-slate-800 pb-2">Суспензія / Емульсія</div>
+                        <div class="space-y-2">
+                            <label class="text-xs text-slate-400 font-bold uppercase tracking-wider">Розмір частинок:</label>
+                            <select id="match-size-3" class="w-full bg-slate-800 border border-slate-600 rounded-lg p-3 text-white font-medium focus:border-cyan-400 focus:outline-none">
+                                <option value="">Оберіть розмір...</option>
+                                <option value="small">< 1 нм</option>
+                                <option value="medium">1 - 100 нм</option>
+                                <option value="large">> 100 нм</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs text-slate-400 font-bold uppercase tracking-wider">Ознака / Приклад:</label>
+                            <select id="match-ex-3" class="w-full bg-slate-800 border border-slate-600 rounded-lg p-3 text-white font-medium focus:border-cyan-400 focus:outline-none">
+                                <option value="">Оберіть приклад...</option>
+                                <option value="tyndall">Ефект Тіндаля, туман, білок</option>
+                                <option value="transparent">Прозорий, не видно частинок</option>
+                                <option value="sediment">Каламутний, осідає з часом</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 items-center justify-between border-t border-slate-700/60 pt-4">
+                    <button onclick="checkMatching()" class="w-full sm:w-auto px-8 py-3.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black rounded-xl text-base transition-all shadow-lg shadow-cyan-500/20 active:scale-95">
+                        Перевірити відповідність
+                    </button>
+                    <div id="matching-feedback" class="text-lg font-bold"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: SEQUENCE EXERCISE -->
+        <section id="section-sequence" class="tab-content hidden space-y-6">
+            <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-6 shadow-xl">
+                <div class="mb-4">
+                    <span class="inline-block px-3 py-1 bg-emerald-500/10 text-emerald-400 text-xs font-black tracking-wider uppercase rounded-full mb-2 border border-emerald-500/20">
+                        Вправа 2
+                    </span>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-white">Алгоритм Приготування Розчину</h2>
+                    <p class="text-slate-300 text-base md:text-lg mt-1">
+                        Відновіть правильний порядок дій хіміка під час приготування розчину (від 1 до 4).
+                    </p>
+                </div>
+
+                <div id="sequence-container" class="space-y-3 my-6">
+                    <!-- Sequence items will be generated here -->
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 items-center justify-between border-t border-slate-700/60 pt-4">
+                    <button onclick="checkSequence()" class="w-full sm:w-auto px-8 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black rounded-xl text-base transition-all shadow-lg shadow-emerald-500/20 active:scale-95">
+                        Перевірити алгоритм
+                    </button>
+                    <div id="sequence-feedback" class="text-lg font-bold"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: BLITZ TRAPS EXERCISE -->
+        <section id="section-blitz" class="tab-content hidden space-y-6">
+            <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-6 shadow-xl">
+                <div class="mb-4">
+                    <span class="inline-block px-3 py-1 bg-amber-500/10 text-amber-400 text-xs font-black tracking-wider uppercase rounded-full mb-2 border border-amber-500/20">
+                        Вправа 3
+                    </span>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-white">Аналіз НМТ-Пасток</h2>
+                    <p class="text-slate-300 text-base md:text-lg mt-1">
+                        Визначте, чи є твердження правильним, та перевірте своє розуміння теорії розчинів.
+                    </p>
+                </div>
+
+                <div id="blitz-container" class="space-y-4 my-6">
+                    <!-- Blitz cards dynamically populated -->
+                </div>
+
+                <div class="flex justify-between items-center border-t border-slate-700/60 pt-4">
+                    <div id="blitz-score" class="text-lg font-bold text-slate-300">Пройдено: 0 / 4</div>
+                    <button onclick="resetBlitz()" class="px-5 py-2.5 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-xl text-sm transition-all">
+                        Скинути відповіді
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: CALCULATIONS EXERCISE -->
+        <section id="section-calc" class="tab-content hidden space-y-6">
+            <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-6 shadow-xl">
+                <div class="mb-4">
+                    <span class="inline-block px-3 py-1 bg-rose-500/10 text-rose-400 text-xs font-black tracking-wider uppercase rounded-full mb-2 border border-rose-500/20">
+                        Вправа 4
+                    </span>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-white">Розрахунковий Тренажер</h2>
+                    <p class="text-slate-300 text-base md:text-lg mt-1">
+                        Розв'яжіть задачі за допомогою формул масової частки та густини.
+                    </p>
+                </div>
+
+                <!-- Calculator Cheat Sheet Box -->
+                <div class="p-4 bg-slate-900/80 border border-cyan-500/30 rounded-xl mb-6 flex flex-wrap gap-4 items-center justify-around text-sm">
+                    <div class="flex items-center gap-2">
+                        <span class="text-cyan-400 font-bold">Формула ω:</span>
+                        <code class="bg-slate-800 px-2 py-1 rounded text-cyan-200">ω = m(реч) / m(розч) * 100%</code>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-emerald-400 font-bold">Маса розчину:</span>
+                        <code class="bg-slate-800 px-2 py-1 rounded text-emerald-200">m(розч) = m(вода) + m(реч)</code>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-amber-400 font-bold">Густина:</span>
+                        <code class="bg-slate-800 px-2 py-1 rounded text-amber-200">m = ρ * V</code>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Task 1 -->
+                    <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-5 space-y-4">
+                        <div class="flex items-start justify-between gap-2">
+                            <span class="font-bold text-rose-400 text-lg">Задача 1</span>
+                            <span class="text-xs bg-slate-800 text-slate-400 px-2 py-1 rounded">Масова частка</span>
+                        </div>
+                        <p class="text-lg text-slate-200 font-medium leading-relaxed">
+                            У воді масою <span class="text-cyan-400 font-bold">360 г</span> розчинили кухонну сіль масою <span class="text-amber-400 font-bold">40 г</span>. Обчисліть масову частку солі в утвореному розчині (у %).
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+                            <input type="number" id="calc-ans-1" placeholder="Ваша відповідь (%)" class="bg-slate-800 border border-slate-600 rounded-xl px-4 py-3 text-white text-lg font-bold w-full sm:w-48 focus:border-rose-400 focus:outline-none">
+                            <button onclick="checkCalc(1, 10)" class="px-6 py-3 bg-rose-500 hover:bg-rose-400 text-slate-950 font-black rounded-xl transition-all shadow-lg shadow-rose-500/20">
+                                Перевірити
+                            </button>
+                        </div>
+                        <div id="calc-fb-1" class="text-base font-bold hidden p-3 rounded-lg"></div>
+                    </div>
+
+                    <!-- Task 2 -->
+                    <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-5 space-y-4">
+                        <div class="flex items-start justify-between gap-2">
+                            <span class="font-bold text-rose-400 text-lg">Задача 2</span>
+                            <span class="text-xs bg-slate-800 text-slate-400 px-2 py-1 rounded">Міст «Густина»</span>
+                        </div>
+                        <p class="text-lg text-slate-200 font-medium leading-relaxed">
+                            Обчисліть масу розчину солі (у грамах) об’ємом <span class="text-cyan-400 font-bold">200 мл</span>, якщо його густина дорівнює <span class="text-emerald-400 font-bold">1.15 г/мл</span>.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+                            <input type="number" id="calc-ans-2" placeholder="Ваша відповідь (г)" class="bg-slate-800 border border-slate-600 rounded-xl px-4 py-3 text-white text-lg font-bold w-full sm:w-48 focus:border-rose-400 focus:outline-none">
+                            <button onclick="checkCalc(2, 230)" class="px-6 py-3 bg-rose-500 hover:bg-rose-400 text-slate-950 font-black rounded-xl transition-all shadow-lg shadow-rose-500/20">
+                                Перевірити
+                            </button>
+                        </div>
+                        <div id="calc-fb-2" class="text-base font-bold hidden p-3 rounded-lg"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-slate-800 bg-slate-950 py-6 text-center text-sm text-slate-400">
+        <p>Підготовка до НМТ з хімії • Тема «Розчини»</p>
+        <p class="text-xs text-slate-400 mt-1">Зроблено для швидкого засвоєння та відпрацювання матеріалу</p>
+    </footer>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-cyan-500', 'text-slate-950', 'shadow-md');
+                btn.classList.add('text-slate-300');
+            });
+
+            document.getElementById(`section-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            activeBtn.classList.add('bg-cyan-500', 'text-slate-950', 'shadow-md');
+            activeBtn.classList.remove('text-slate-300');
+        }
+
+        function checkMatching() {
+            const size1 = document.getElementById('match-size-1').value;
+            const ex1 = document.getElementById('match-ex-1').value;
+
+            const size2 = document.getElementById('match-size-2').value;
+            const ex2 = document.getElementById('match-ex-2').value;
+
+            const size3 = document.getElementById('match-size-3').value;
+            const ex3 = document.getElementById('match-ex-3').value;
+
+            const feedback = document.getElementById('matching-feedback');
+
+            const isCorrect = 
+                size1 === 'small' && ex1 === 'transparent' &&
+                size2 === 'medium' && ex2 === 'tyndall' &&
+                size3 === 'large' && ex3 === 'sediment';
+
+            if (isCorrect) {
+                feedback.className = "text-lg font-bold text-emerald-400 bg-emerald-950/40 px-4 py-2 rounded-xl border border-emerald-500/30";
+                feedback.textContent = "✓ Відмінно! Всі системи визначено правильно!";
+            } else {
+                feedback.className = "text-lg font-bold text-rose-400 bg-rose-950/40 px-4 py-2 rounded-xl border border-rose-500/30";
+                feedback.textContent = "✕ Є помилки. Перевірте розміри частинок та приклади!";
+            }
+        }
+
+        const initialSequence = [
+            { id: 2, text: "Перенести наважку сухої речовини в мірну колбу або хімічний стакан.", step: "Крок ?" },
+            { id: 4, text: "Долити розчинник строго до лінії меніска (для встановлення точного об’єму).", step: "Крок ?" },
+            { id: 1, text: "Розрахувати та зважити необхідну масу сухої речовини на терезах.", step: "Крок ?" },
+            { id: 3, text: "Додати частину розчинника та перемішати до повного зникнення кристалів.", step: "Крок ?" }
+        ];
+
+        let currentSequence = [...initialSequence];
+
+        function renderSequence() {
+            const container = document.getElementById('sequence-container');
+            container.innerHTML = '';
+
+            currentSequence.forEach((item, index) => {
+                const el = document.createElement('div');
+                el.className = 'flex items-center justify-between gap-4 p-4 bg-slate-900 border border-slate-700 rounded-xl transition-all';
+                el.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 font-black flex items-center justify-center text-lg">
+                            ${index + 1}
+                        </span>
+                        <p class="text-base md:text-lg font-medium text-slate-100">${item.text}</p>
+                    </div>
+                    <div class="flex gap-1">
+                        <button onclick="moveStep(${index}, -1)" ${index === 0 ? 'disabled class="opacity-30 p-2"' : 'class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-emerald-400 font-bold"'}>
+                            ▲
+                        </button>
+                        <button onclick="moveStep(${index}, 1)" ${index === currentSequence.length - 1 ? 'disabled class="opacity-30 p-2"' : 'class="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-emerald-400 font-bold"'}>
+                            ▼
+                        </button>
+                    </div>
+                `;
+                container.appendChild(el);
+            });
+        }
+
+        function moveStep(index, direction) {
+            const targetIndex = index + direction;
+            if (targetIndex < 0 || targetIndex >= currentSequence.length) return;
+            const temp = currentSequence[index];
+            currentSequence[index] = currentSequence[targetIndex];
+            currentSequence[targetIndex] = temp;
+            renderSequence();
+        }
+
+        function checkSequence() {
+            const feedback = document.getElementById('sequence-feedback');
+            const isCorrect = currentSequence.every((item, idx) => item.id === idx + 1);
+
+            if (isCorrect) {
+                feedback.className = "text-lg font-bold text-emerald-400 bg-emerald-950/40 px-4 py-2 rounded-xl border border-emerald-500/30";
+                feedback.textContent = "✓ Абсолютно вірно! Послідовність ідеальна.";
+            } else {
+                feedback.className = "text-lg font-bold text-rose-400 bg-rose-950/40 px-4 py-2 rounded-xl border border-rose-500/30";
+                feedback.textContent = "✕ Невірно. Згадайте: Спочатку зважуємо -> Переносимо -> Розчиняємо -> Доливаємо до мітки.";
+            }
+        }
+
+        const blitzData = [
+            {
+                statement: "Якщо розчинити 20 г солі у 100 г води, то маса отриманого розчину дорівнює 100 г.",
+                correct: false,
+                explanation: "Пастка НМТ! Маса розчину складається з маси солі та маси води (100 г + 20 г = 120 г)."
+            },
+            {
+                statement: "Під час відкривання пляшки з газованим напоєм розчинність газу зменшується через падіння тиску.",
+                correct: true,
+                explanation: "Правильно! За законом Генрі гази краще розчиняються під високим тиском."
+            },
+            {
+                statement: "Для обчислення молярної концентрації (C_M) об'єм розчину можна підставляти у мілілітрах.",
+                correct: false,
+                explanation: "Ні! Об'єм розчину в формулі молярної концентрації береться СТРОГО в літрах (моль/л)."
+            },
+            {
+                statement: "При нагріванні розчинність більшості твердих речовин зростає, а газів — зменшується.",
+                correct: true,
+                explanation: "Правильно! Нагрівання руйнує кристалічну ґратку твердих тіл, а молекулам газу надає кінетичну енергію для виходу з рідини."
+            }
+        ];
+
+        let blitzAnswers = {};
+
+        function renderBlitz() {
+            const container = document.getElementById('blitz-container');
+            container.innerHTML = '';
+
+            blitzData.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-900/90 border border-slate-700 rounded-xl p-5 space-y-4";
+                
+                const answered = blitzAnswers[index] !== undefined;
+                const isUserCorrect = answered && blitzAnswers[index] === item.correct;
+
+                card.innerHTML = `
+                    <p class="text-lg text-slate-100 font-medium leading-relaxed">${index + 1}. "${item.statement}"</p>
+                    
+                    <div class="flex gap-3">
+                        <button onclick="answerBlitz(${index}, true)" ${answered ? 'disabled' : ''} 
+                            class="px-5 py-2.5 rounded-lg font-bold transition-all ${blitzAnswers[index] === true ? (item.correct ? 'bg-emerald-500 text-slate-950' : 'bg-rose-500 text-white') : 'bg-slate-800 text-emerald-400 hover:bg-slate-700'}">
+                            ✓ Вірно
+                        </button>
+                        <button onclick="answerBlitz(${index}, false)" ${answered ? 'disabled' : ''} 
+                            class="px-5 py-2.5 rounded-lg font-bold transition-all ${blitzAnswers[index] === false ? (!item.correct ? 'bg-emerald-500 text-slate-950' : 'bg-rose-500 text-white') : 'bg-slate-800 text-rose-400 hover:bg-slate-700'}">
+                            ✕ Невірно
+                        </button>
+                    </div>
+
+                    ${answered ? `
+                        <div class="mt-3 p-3 rounded-lg text-sm font-bold ${isUserCorrect ? 'bg-emerald-950/60 text-emerald-300 border border-emerald-500/30' : 'bg-rose-950/60 text-rose-300 border border-rose-500/30'}">
+                            ${isUserCorrect ? '✓ Правильно!' : '✕ Помилка!'} ${item.explanation}
+                        </div>
+                    ` : ''}
+                `;
+
+                container.appendChild(card);
+            });
+
+            const count = Object.keys(blitzAnswers).length;
+            document.getElementById('blitz-score').textContent = `Пройдено: ${count} / ${blitzData.length}`;
+        }
+
+        function answerBlitz(index, answer) {
+            blitzAnswers[index] = answer;
+            renderBlitz();
+        }
+
+        function resetBlitz() {
+            blitzAnswers = {};
+            renderBlitz();
+        }
+
+        function checkCalc(taskNum, expectedVal) {
+            const val = parseFloat(document.getElementById(`calc-ans-${taskNum}`).value);
+            const fb = document.getElementById(`calc-fb-${taskNum}`);
+            fb.classList.remove('hidden', 'bg-emerald-950/60', 'text-emerald-300', 'bg-rose-950/60', 'text-rose-300', 'border-emerald-500/30', 'border-rose-500/30');
+
+            if (val === expectedVal) {
+                fb.classList.add('bg-emerald-950/60', 'text-emerald-300', 'border', 'border-emerald-500/30');
+                if (taskNum === 1) {
+                    fb.innerHTML = `✓ Абсолютно вірно! m(розчину) = 360 + 40 = 400 г. <br>ω = (40 / 400) * 100% = 10%.`;
+                } else {
+                    fb.innerHTML = `✓ Абсолютно вірно! m = ρ * V = 1.15 г/мл * 200 мл = 230 г.`;
+                }
+            } else {
+                fb.classList.add('bg-rose-950/60', 'text-rose-300', 'border', 'border-rose-500/30');
+                if (taskNum === 1) {
+                    fb.innerHTML = `✕ Неправильно. Пам'ятайте, що маса розчину дорівнює масі води + масі солі (360 + 40 = 400 г). Спробуйте ще раз!`;
+                } else {
+                    fb.innerHTML = `✕ Неправильно. Використайте формулу m = ρ * V (200 * 1.15).`;
+                }
+            }
+        }
+
+        window.onload = function() {
+            renderSequence();
+            renderBlitz();
+        };
+    </script>
+</body>
+</html>
